@@ -9,6 +9,7 @@ interface UseCustomMoveReturn {
   moveToRead: (tno: number) => void;
   page: number;
   size: number;
+  refresh: boolean;
 }
 
 interface PageReqeustDto {
@@ -27,4 +28,10 @@ interface PageResponseDTO<T> {
   nextPage: number; // 다음 페이지 번호
   totalPage: number; // 전체 페이지 수
   current: number; // 현재 페이지 번호
+}
+
+interface TodoAdd {
+  title: string;
+  writer: string;
+  dueDate: string;
 }

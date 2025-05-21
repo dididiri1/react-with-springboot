@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { createSearchParams, useNavigate, useSearchParams } from "react-router";
 
 const useCustomMove = () => {
   const nav = useNavigate();
 
   const [queryParams] = useSearchParams();
+
+  const [refresh, setRefresh] = useState<boolean>(false);
 
   const pageStr: string | null = queryParams.get("page");
   const sizeStr: string | null = queryParams.get("size");
@@ -34,13 +37,17 @@ const useCustomMove = () => {
         page: String(pageNum),
         size: String(sizeNum),
       }).toString();
+
+      if (queryStr === queryDefault) {
+        setRefresh(!refresh);
+      }
     } else {
       queryStr = queryDefault;
     }
     nav({ pathname: "../list", search: queryStr });
   };
 
-  return { page, size, moveToList, moveToModify, moveToRead };
+  return { page, size, moveToList, refresh, moveToModify, moveToRead };
 };
 
 export default useCustomMove;
