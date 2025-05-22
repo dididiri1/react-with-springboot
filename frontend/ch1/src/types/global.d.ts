@@ -35,3 +35,9 @@ interface TodoAdd {
   writer: string;
   dueDate: string;
 }
+
+interface ResultModal {
+  title: string;
+  content: string;
+  callbackFn?: () => void;
+}

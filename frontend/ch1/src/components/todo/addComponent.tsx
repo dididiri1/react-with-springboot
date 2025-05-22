@@ -1,5 +1,7 @@
 import { useState, type ChangeEvent } from "react";
 import { postAdd } from "../../api/todoApi";
+import useCustomMove from "../../hooks/useCustomMove";
+import ResultModal from "../common/resultModal";
 
 const initState: TodoAdd = {
   title: "",
@@ -9,6 +11,10 @@ const initState: TodoAdd = {
 
 const AddComponent = () => {
   const [todo, setTodo] = useState<TodoAdd>({ ...initState });
+
+  const [result, setResult] = useState<number | null>(null);
+
+  const { moveToList }: UseCustomMoveReturn = useCustomMove();
 
   const handleChangeTodo = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -22,6 +28,9 @@ const AddComponent = () => {
     postAdd(todo)
       .then((result) => {
         console.log(result);
+
+        setResult(result.TNO);
+
         setTodo({ ...initState }); // 초기화
       })
       .catch((e) => {
@@ -29,8 +38,22 @@ const AddComponent = () => {
       });
   };
 
+  const closeModal = () => {
+    setResult(null);
+    moveToList();
+  };
+
   return (
     <div className="border-2 border-sky-200 mt-10 m-2 p-4">
+      {/* 모달 처리 */}
+      {result && (
+        <ResultModal
+          title="등록 처리 완료"
+          content={`New ${result} Added`}
+          callbackFn={closeModal}
+        ></ResultModal>
+      )}
+
       {/* TITLE 입력 */}
       <div className="flex justify-center">
         <div className="relative mb-4 flex w-full flex-wrap items-stretch">
