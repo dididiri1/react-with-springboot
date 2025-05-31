@@ -4,6 +4,7 @@ import {
   useLoaderData,
   type LoaderFunctionArgs,
 } from "react-router";
+import ListComponent from "../../components/products/listComponent";
 
 export async function loadProducts({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
@@ -20,11 +21,11 @@ export async function loadProducts({ request }: LoaderFunctionArgs) {
 const ListPage = () => {
   const pageResponse = useLoaderData();
 
-  console.log(JSON.stringify(pageResponse));
-
   return (
     <div className="w-full mt-4 border border-solid border-neutral-300 shadow-md">
       <div className="text-2xl m-4 font-extrabold">Products List Page</div>
+
+      <ListComponent serverData={pageResponse}></ListComponent>
     </div>
   );
 };
