@@ -49,19 +49,20 @@ const loginSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(loginPostAsync.fulfilled, (state, action) => {
-        console.log("fulfilled");
         const newState: LoginInfo = action.payload;
 
         newState.status = "fulfilled";
+
+        console.log("newState", newState);
 
         setCookie("member", JSON.stringify(newState), 1);
 
         return newState;
       })
-      .addCase(loginPostAsync.pending, (state, action) => {
+      .addCase(loginPostAsync.pending, (state) => {
         state.status = "pending";
       })
-      .addCase(loginPostAsync.rejected, (state, action) => {
+      .addCase(loginPostAsync.rejected, (state) => {
         state.status = "rejected";
       });
   },

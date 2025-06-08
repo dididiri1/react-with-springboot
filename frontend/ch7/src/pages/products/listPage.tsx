@@ -5,13 +5,14 @@ import {
   type LoaderFunctionArgs,
 } from "react-router";
 import ListComponent from "../../components/products/listComponent";
+import jwtAxios from "../../util/jwtUtil";
 
 export async function loadProducts({ request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
   const page = url.searchParams.get("page") || "1";
   const size = url.searchParams.get("size") || "10";
   const queryStr = createSearchParams({ page, size }).toString();
-  const res = await axios.get(
+  const res = await jwtAxios.get(
     `http://localhost:8080/api/products/list?${queryStr}`
   );
 
