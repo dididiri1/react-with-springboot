@@ -37,7 +37,13 @@ const loginSlice = createSlice({
   initialState: initState,
   reducers: {
     save: (state, action) => {
-      console.log("save ......");
+      const payload = action.payload; // 소셜로그인 회원이 사용
+
+      const newState = { ...payload, state: "saved" };
+      setCookie("member", JSON.stringify(newState), 1);
+
+      return payload;
+
       return action.payload;
     },
     logout: (state, action) => {
