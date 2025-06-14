@@ -12,7 +12,9 @@ const KaKaoRedirectPage = () => {
 
   const authCode = searchParams.get("code");
 
-  const [social, setSocial] = useState<boolean>(false);
+  //const [social, setSocial] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (authCode) {
@@ -20,15 +22,15 @@ const KaKaoRedirectPage = () => {
         getMemberWithAccessToken(aceesToken).then((result) => {
           dispatch(save(result));
 
-          setSocial(result.social);
+          if (result.social) {
+            navigate("/member/modify");
+          } else {
+            navigate("/");
+          }
         });
       });
     }
   }, [authCode]);
-
-  if (social) {
-    return <Navigate to={"/member/modify"}></Navigate>;
-  }
 
   return (
     <>
