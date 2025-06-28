@@ -1,23 +1,23 @@
-import { useDispatch, useSelector } from "react-redux";
-import { type AppDispatch, type RootState } from "../store";
-import { loginPostAsync, logout, save } from "../features/loginSlice";
 import { Navigate, useNavigate } from "react-router";
 import { useEffect } from "react";
 import { getCookie } from "../util/cookieUtil";
+import useZustandMember from "../zstore/useZustandMember";
 
 const useCustomLogin = () => {
-  const dispatch = useDispatch<AppDispatch>();
+  const { member, status, login, logout, save } = useZustandMember();
 
-  const loginState = useSelector((state: RootState) => state.loginSlice);
+  // 로그인 상태 객체
+  const loginState = member;
 
-  const loginStatus = loginState.status;
+  // 로그인 여부
+  const loginStatus = status;
 
   useEffect(() => {
     if (!loginStatus) {
       const cookieData = getCookie("member");
 
       if (cookieData) {
-        dispatch(save(cookieData));
+        save(cookieData);
       }
     }
   }, []);
@@ -25,11 +25,11 @@ const useCustomLogin = () => {
   const navigate = useNavigate();
 
   const doLogin = async (email: string, pw: string) => {
-    dispatch(loginPostAsync({ email, pw }));
+    login(email, pw);
   };
 
   const doLogout = () => {
-    dispatch(logout(null));
+    logout();
   };
 
   const moveToLogin = () => {
