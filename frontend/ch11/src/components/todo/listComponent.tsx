@@ -16,7 +16,7 @@ const initState: PageResponseDTO<Todo> = {
 };
 
 const ListComponent = () => {
-  const { page, size, refresh, moveToRead, moveToList }: UseCustomMoveReturn =
+  const { page, size, refresh, moveToRead }: UseCustomMoveReturn =
     useCustomMove();
 
   // serverData 나중에 사용

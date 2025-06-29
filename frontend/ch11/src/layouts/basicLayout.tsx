@@ -1,15 +1,9 @@
 import { Outlet } from "react-router";
 import BasicMenu from "../components/menus/basicMenu";
-import { useSelector } from "react-redux";
-import type { RootState } from "../store";
-import type { LoginInfo } from "../features/loginSlice";
+
 import CartComponent from "../components/menus/cartComponent";
 
 const BasicLayout = () => {
-  const loginState: LoginInfo = useSelector(
-    (state: RootState) => state.loginSlice
-  );
-
   return (
     <>
       <BasicMenu />
